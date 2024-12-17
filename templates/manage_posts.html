@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Manage Posts</h2>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Content</th>
+        <th>Author</th>
+        <th>Actions</th>
+    </tr>
+    {% for post in posts %}
+    <tr>
+        <form method="post" action="/posts/{{ post.id }}/edit">
+            <td>{{ post.id }}</td>
+            <td><textarea name="title">{{ post.title }}</textarea></td>
+            <td><textarea name="content">{{ post.content }}</textarea></td>
+            <td>{{ post.user_id }}</td>
+            <td>
+                <button type="submit">Edit</button>
+            </form>
+            <form method="post" action="/posts/{{ post.id }}/delete" style="display:inline;">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+<h3>Create New Post</h3>
+<form method="post" action="/posts">
+    <input type="text" name="title" placeholder="Title">
+    <textarea name="content" placeholder="Content"></textarea>
+    <select name="user_id">
+        {% for user in users %}
+        <option value="{{ user.id }}">{{ user.username }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit">Create Post</button>
+</form>
+{% endblock %}
